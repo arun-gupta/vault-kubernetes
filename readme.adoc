@@ -1,2 +1,8 @@
 = Java application that reads secrets
 
+== Using Maven
+
+```
+mvn clean package exec:java
+```
+
