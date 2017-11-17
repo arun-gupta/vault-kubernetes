@@ -79,11 +79,6 @@
                                         </assembly>
                                         <cmd>java -jar maven/${project.name}-${project.version}.jar</cmd>
                                     </build>
-                                    <run>
-                                        <wait>
-                                            <log>Hello World!</log>
-                                        </wait>
-                                    </run>
                                 </image>
                             </images>
                         </configuration>
@@ -96,11 +91,10 @@
                                 </goals>
                             </execution>
                             <execution>
-                                <id>docker:start</id>
+                                <id>docker:push</id>
                                 <phase>install</phase>
                                 <goals>
-                                    <goal>run</goal>
-                                    <goal>logs</goal>
+                                    <goal>push</goal>
                                 </goals>
                             </execution>
                         </executions>

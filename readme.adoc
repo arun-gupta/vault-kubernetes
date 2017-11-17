@@ -1,4 +1,5 @@
 = Java application that reads secrets
+:toc:
 
 == Using Maven
 
@@ -6,3 +7,75 @@
 mvn clean package exec:java
 ```
 
+== Using Docker
+
+. Build image: `mvn package -Pdocker`. Optionally, `mvn install -Pdocker` pushes the image to Docker Hub.
+. Create secrets:
++
+```
+$ echo Hello | docker secret create GREETING -
+3drg1042bdqujw4u1bu44b0om
+$ echo World! | docker secret create NAME -
+d33yop5ijqgwv7yd8m1xx3w74
+```
++ 
+. Run the image with secrets:
++
+```
+docker swarm init
+docker stack deploy --compose-file=docker-compose.yml java
+```
++
+. Check service:
++
+```
+$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE                               PORTS
+ix2trek6kw0x        java_java           replicated          1/1                 arungupta/java-app-secrets:latest   
+```
++
+. Check the logs:
++
+```
+docker service logs java_java
+```
++
+. Remove the app:
++
+```
+docker stack rm java
+```
+
+== Using Kubernetes
+
+. Encode secrets:
++
+```
+$ echo -n "Hello" | base64
+SGVsbG8=
+$ echo -n "World" | base64
+V29ybGQ=
+```
++
+. Create secrets:
++
+```
+$ kubectl apply -f secrets.yaml 
+secret "mysecret" created
+```
++
+. Get secrets:
++
+```
+$ kubectl get secrets
+NAME                  TYPE                                  DATA      AGE
+default-token-kvjn9   kubernetes.io/service-account-token   3         2d
+mysecret              Opaque                                2         21s
+```
++
+. Create a pod using these secrets:
++
+```
+$ kubectl apply -f pod.yaml
+pod "java-app-secrets" created
+```
