@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  java:
+    image: arungupta/java-app-secrets:latest
+    environment:
+      GREETING: /run/secrets/GREETING
+      NAME: /run/secrets/NAME
+    secrets:
+      - GREETING
+      - NAME
+secrets:
+  GREETING:
+    external: true
+  NAME:
+    external: true  

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: java-app-secrets
+spec:
+  containers:
+  - name: java-app-secrets
+    image: arungupta/java-app-secrets:latest
+    env:
+      - name: GREETING
+        valueFrom:
+          secretKeyRef:
+            name: mysecret
+            key: GREETING
+      - name: NAME
+        valueFrom:
+          secretKeyRef:
+            name: mysecret
+            key: NAME
+  restartPolicy: Never
