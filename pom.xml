@@ -71,7 +71,7 @@
                         <configuration>
                             <images>
                                 <image>
-                                    <name>arungupta:${project.build.finalName}</name>
+                                    <name>arungupta/${project.name}</name>
                                     <build>
                                         <from>openjdk:latest</from>
                                         <assembly>
