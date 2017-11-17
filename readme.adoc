@@ -19,11 +19,33 @@ $ echo World! | docker secret create NAME -
 d33yop5ijqgwv7yd8m1xx3w74
 ```
 + 
-. Run the image with secrets:
+. Initialize Swarm:
 +
 ```
-docker swarm init
-docker stack deploy --compose-file=docker-compose.yml java
+$ docker swarm init
+Swarm initialized: current node (99445n0kbxskzhlu6yeng5dm0) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-4e2jryq7nv24dk6cx0uor6r2gpkl2eaphli9aa695l1lqpe5ll-7zi03mrk7dp3s5nyaqh08ayz0 192.168.65.2:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+```
++
+. Deploy the stack:
++
+```
+$ docker stack deploy --compose-file=docker-compose.yaml java
+Creating network java_default
+Creating service java_java
+```
++
+. Check stack:
++
+```
+$ docker stack ls
+NAME                SERVICES
+java                1
 ```
 +
 . Check service:
@@ -31,7 +53,7 @@ docker stack deploy --compose-file=docker-compose.yml java
 ```
 $ docker service ls
 ID                  NAME                MODE                REPLICAS            IMAGE                               PORTS
-ix2trek6kw0x        java_java           replicated          1/1                 arungupta/java-app-secrets:latest   
+62p7k3bspmj6        java_java           replicated          1/1                 arungupta/java-app-secrets:latest   
 ```
 +
 . Check the logs:
