@@ -1,13 +1,54 @@
-= Java application that reads secrets
+= Java Application and Secrets
 :toc:
 
-== Using Maven
+== Using Vault
 
 ```
 mvn clean package exec:java
 ```
 
-== Using Docker
+== Using Kubernetes
+
+. Encode secrets:
++
+```
+$ echo -n "Hello" | base64
+SGVsbG8=
+$ echo -n "World" | base64
+V29ybGQ=
+```
++
+. Create secrets:
++
+```
+$ kubectl apply -f secrets.yaml
+secret "mysecret" created
+```
++
+. Get secrets:
++
+```
+$ kubectl get secrets
+NAME                  TYPE                                  DATA      AGE
+default-token-kvjn9   kubernetes.io/service-account-token   3         2d
+mysecret              Opaque                                2         21s
+```
++
+. Create a pod using these secrets:
++
+```
+$ kubectl apply -f pod.yaml
+pod "java-app-secrets" created
+```
++
+. Get logs:
++
+```
+$ kubectl logs pod/java-app-secrets
+HelloWorld
+```
+
+== Using Docker (NOT WORKING)
 
 . Build image: `mvn package -Pdocker`. Optionally, `mvn install -Pdocker` pushes the image to Docker Hub.
 . Create secrets:
@@ -68,36 +109,3 @@ docker service logs java_java
 docker stack rm java
 ```
 
-== Using Kubernetes
-
-. Encode secrets:
-+
-```
-$ echo -n "Hello" | base64
-SGVsbG8=
-$ echo -n "World" | base64
-V29ybGQ=
-```
-+
-. Create secrets:
-+
-```
-$ kubectl apply -f secrets.yaml 
-secret "mysecret" created
-```
-+
-. Get secrets:
-+
-```
-$ kubectl get secrets
-NAME                  TYPE                                  DATA      AGE
-default-token-kvjn9   kubernetes.io/service-account-token   3         2d
-mysecret              Opaque                                2         21s
-```
-+
-. Create a pod using these secrets:
-+
-```
-$ kubectl apply -f pod.yaml
-pod "java-app-secrets" created
-```
