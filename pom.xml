@@ -7,7 +7,11 @@
     <version>1.0-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
     <dependencies>
-
+        <dependency>
+            <groupId>com.bettercloud</groupId>
+            <artifactId>vault-java-driver</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -27,7 +31,7 @@
                 <executions>
                     <execution>
                         <goals>
-                            <goal>java</goal>
+                            <goal>exec</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -41,6 +45,10 @@
                         <systemProperty>
                             <key>NAME</key>
                             <value>World!</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <key>VAULT_ADDR</key>
+                            <value>http://ec2-54-237-223-40.compute-1.amazonaws.com:8200</value>
                         </systemProperty>
                     </systemProperties>
                 </configuration>
