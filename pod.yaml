@@ -17,4 +17,6 @@ spec:
           secretKeyRef:
             name: mysecret
             key: NAME
+      - name: VAULT_ADDR
+        value: http://ec2-54-237-223-40.compute-1.amazonaws.com:8200
   restartPolicy: Never
