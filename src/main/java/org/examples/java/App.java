@@ -10,12 +10,13 @@ import com.bettercloud.vault.VaultException;
  */
 public class App {
     public static void main(String[] args) throws VaultException {
-        System.out.println("prop: "
-                + System.getProperty("GREETING")
-                + System.getProperty("NAME"));
-        System.out.println("Connecting to Vault: " + System.getProperty("VAULT_ADDR"));
+//        System.out.println("prop: "
+//                + System.getProperty("GREETING")
+//                + System.getProperty("NAME"));
+        System.out.println("Connecting to Vault: " + System.getenv("VAULT_ADDR"));
         final VaultConfig config = new VaultConfig()
-                .address(System.getProperty("VAULT_ADDR"))
+                .address(System.getenv("VAULT_ADDR"))
+                .token(System.getenv("VAULT_TOKEN"))
                 .sslConfig(new SslConfig().verify(false).build())
                 .build();
         final Vault vault = new Vault(config);
