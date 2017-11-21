@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: java-app-secrets
 spec:
+  serviceAccountName: vault-auth
   containers:
   - name: java-app-secrets
     image: arungupta/java-app-secrets:latest
