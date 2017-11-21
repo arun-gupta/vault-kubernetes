@@ -1,11 +1,8 @@
 = Vault and Kubernetes
-:toc:
 
 This repo shows how a Java application deployed as a Pod in a Kubernetes cluster can read secrets from Vault.
 
 Complete details: https://github.com/arun-gupta/kubernetes-aws-workshop/
-
-== Using Kubernetes and Vault
 
 . Build Docker image: `mvn package -Pdocker`
 . Push Docker image: `docker push arungupta/java-app-secrets:latest`
