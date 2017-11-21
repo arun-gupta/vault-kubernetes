@@ -5,8 +5,8 @@ This repo shows how a Java application deployed as a Pod in a Kubernetes cluster
 Complete details: https://github.com/arun-gupta/kubernetes-aws-workshop/
 
 . Build Docker image: `mvn package -Pdocker`
-. Push Docker image: `docker push arungupta/java-app-secrets:latest`
-. Delete pod: `kubectl delete pod/java-app-secrets`
+. Push Docker image: `docker push arungupta/vault-kubernetes:latest`
+. Delete pod: `kubectl delete pod/vault-kubernetes`
 . Deploy pod: `kubectl apply -f pod.yaml`
-. Check pod logs: `kubectl logs pod/java-app-secrets`
+. Check pod logs: `kubectl logs pod/vault-kubernetes`
 
