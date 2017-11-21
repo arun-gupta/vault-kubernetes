@@ -1,5 +1,9 @@
-= Java Application and Secrets
+= Vault and Kubernetes
 :toc:
+
+This repo shows how a Java application deployed as a Pod in a Kubernetes cluster can read secrets from Vault.
+
+Complete details: https://github.com/arun-gupta/kubernetes-aws-workshop/
 
 == Using Kubernetes and Vault
 
@@ -8,112 +12,4 @@
 . Delete pod: `kubectl delete pod/java-app-secrets`
 . Deploy pod: `kubectl apply -f pod.yaml`
 . Check pod logs: `kubectl logs pod/java-app-secrets`
-
-== Using Vault
-
-```
-mvn clean package exec:java
-```
-
-== Using Kubernetes
-
-. Encode secrets:
-+
-```
-$ echo -n "Hello" | base64
-SGVsbG8=
-$ echo -n "World" | base64
-V29ybGQ=
-```
-+
-. Create secrets:
-+
-```
-$ kubectl apply -f secrets.yaml
-secret "mysecret" created
-```
-+
-. Get secrets:
-+
-```
-$ kubectl get secrets
-NAME                  TYPE                                  DATA      AGE
-default-token-kvjn9   kubernetes.io/service-account-token   3         2d
-mysecret              Opaque                                2         21s
-```
-+
-. Create a pod using these secrets:
-+
-```
-$ kubectl apply -f pod.yaml
-pod "java-app-secrets" created
-```
-+
-. Get logs:
-+
-```
-$ kubectl logs pod/java-app-secrets
-HelloWorld
-```
-
-== Using Docker (NOT WORKING)
-
-. Build image: `mvn package -Pdocker`. Optionally, `mvn install -Pdocker` pushes the image to Docker Hub.
-. Create secrets:
-+
-```
-$ echo Hello | docker secret create GREETING -
-3drg1042bdqujw4u1bu44b0om
-$ echo World! | docker secret create NAME -
-d33yop5ijqgwv7yd8m1xx3w74
-```
-+ 
-. Initialize Swarm:
-+
-```
-$ docker swarm init
-Swarm initialized: current node (99445n0kbxskzhlu6yeng5dm0) is now a manager.
-
-To add a worker to this swarm, run the following command:
-
-    docker swarm join --token SWMTKN-1-4e2jryq7nv24dk6cx0uor6r2gpkl2eaphli9aa695l1lqpe5ll-7zi03mrk7dp3s5nyaqh08ayz0 192.168.65.2:2377
-
-To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
-```
-+
-. Deploy the stack:
-+
-```
-$ docker stack deploy --compose-file=docker-compose.yaml java
-Creating network java_default
-Creating service java_java
-```
-+
-. Check stack:
-+
-```
-$ docker stack ls
-NAME                SERVICES
-java                1
-```
-+
-. Check service:
-+
-```
-$ docker service ls
-ID                  NAME                MODE                REPLICAS            IMAGE                               PORTS
-62p7k3bspmj6        java_java           replicated          1/1                 arungupta/java-app-secrets:latest   
-```
-+
-. Check the logs:
-+
-```
-docker service logs java_java
-```
-+
-. Remove the app:
-+
-```
-docker stack rm java
-```
 
