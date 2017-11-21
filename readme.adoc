@@ -1,6 +1,14 @@
 = Java Application and Secrets
 :toc:
 
+== Using Kubernetes and Vault
+
+. Build Docker image: `mvn package -Pdocker`
+. Push Docker image: `docker push arungupta/java-app-secrets:latest`
+. Delete pod: `kubectl delete pod/java-app-secrets`
+. Deploy pod: `kubectl apply -f pod.yaml`
+. Check pod logs: `kubectl logs pod/java-app-secrets`
+
 == Using Vault
 
 ```
