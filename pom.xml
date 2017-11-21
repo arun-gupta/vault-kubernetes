@@ -12,6 +12,16 @@
             <artifactId>vault-java-driver</artifactId>
             <version>3.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>logging-interceptor</artifactId>
+            <version>3.9.1</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
